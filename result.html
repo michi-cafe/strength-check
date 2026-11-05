@@ -382,6 +382,33 @@
                     );
                 });
         }
+
+        <!-- TOP5収めver -->
+        function fitResultLikeIndex() {
+            const frame = document.querySelector(".result-scale-frame");
+            const content = document.querySelector(".result-scale-content");
+            
+            if (!frame || !content) return;
+            
+            const bs = getComputedStyle(document.body);
+            
+            const availableWidth =
+                window.innerWidth
+                - parseFloat(bs.paddingLeft)
+                - parseFloat(bs.paddingRight);
+
+            const scale = Math.min(
+                1,
+                availableWidth / 800
+            );
+
+            content.style.transform = `scale(${scale})`;
+
+            frame.style.height =
+                `${content.offsetHeight * scale}px`;
+        }
+        
+        <!-- 1ページ収めver 
         function fitResultLikeIndex() {
             const frame = document.querySelector(".result-scale-frame");
             const content = document.querySelector(".result-scale-content");
@@ -390,16 +417,11 @@
             const availableWidth = window.innerWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
             const availableHeight = window.innerHeight - parseFloat(bs.paddingTop) - parseFloat(bs.paddingBottom);
             const scaleX = availableWidth / 800;
-            <!-- 1ページ収めver 
             const scaleY = availableHeight / content.offsetHeight;
-            const scale = Math.min(1, scaleX, scaleY);-->
-
-            <!-- TOP5収めver -->
-            const scale = Math.min(1, scaleX);
-            
+            const scale = Math.min(1, scaleX, scaleY);
             content.style.transform = `scale(${scale})`;
             frame.style.height = `${content.offsetHeight * scale}px`;
-        }
+        }-->
         window.addEventListener("load", fitResultLikeIndex);
         window.addEventListener("resize", fitResultLikeIndex);
         setTimeout(fitResultLikeIndex, 300);
