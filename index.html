@@ -6,91 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>強み診断</title>
-
-    <style>
-        body {
-            font-family: sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: auto;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        .description {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .image-card {
-    	    border-radius: 10px;
-    	    padding: 15px;
-	    min-height:100px;
-    	    display: flex;
-   	    align-items: center;
-    	    gap: 15px;
-	}
-
-	.category-text h3{
-	    margin:0 0 10px 0;
-	    font-size:26px;
-	    font-weight:bold;
-	}
-	.category-text p{
-	    margin:0;
-	    line-height:1.5;
-	}
-	.category-text{
-	    flex:1;
-	    display:flex;
-	    flex-direction:column;
-	    justify-content:center;
-	}
-
-        .start-button {
-            margin-top: 25px;
-        }
-
-        .start-button button {
-            width: 100%;
-            padding: 15px;
-            font-size: 18px;
-            border: none;
-            border-radius: 10px;
-            background-color: #222222;
-            color: white;
-            cursor: pointer;
-        }
-
-        .start-button button:hover {
-            background-color: #43a047;
-        }
-
-        @media (max-width: 600px) {
-            .image-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="page-index">
 
+    <div class="index-scale-frame">
     <div class="container">
 
         <h1>強み診断</h1>
@@ -120,6 +41,7 @@
             </button>
         </div>
 
+    </div>
     </div>
 
     <script>
@@ -165,6 +87,24 @@
                     `;
         	});
     	    });
+
+        function fitIndexPage() {
+            const frame = document.querySelector(".index-scale-frame");
+            const container = document.querySelector(".page-index .container");
+            if (!frame || !container) return;
+
+            const bodyStyle = getComputedStyle(document.body);
+            const availableWidth = window.innerWidth
+                - parseFloat(bodyStyle.paddingLeft)
+                - parseFloat(bodyStyle.paddingRight);
+            const scale = Math.min(1, availableWidth / 800);
+
+            container.style.transform = `scale(${scale})`;
+            frame.style.height = `${container.offsetHeight * scale}px`;
+        }
+
+        window.addEventListener("load", fitIndexPage);
+        window.addEventListener("resize", fitIndexPage);
 
     </script>
 

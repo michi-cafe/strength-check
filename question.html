@@ -5,96 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>強み診断</title>
-
-    <style>
-
-        body{
-            font-family:sans-serif;
-	    background-color: #f5f5f5;
-            max-width:800px;
-            margin:auto;
-            padding:20px;
-        }
-
-        .question-card{
-            background:white;
-            padding:30px;
-            border-radius:15px;
-	    margin-bottom:25px;
-	    box-shadow:0 4px 12px rgba(0,0,0,0.08);
-        }
-
-	.question-number{
-	    color:#777;
-	    font-size:16px;
-	    margin-bottom:15px;
-	}
-	
-	.question-text{
-	    font-size:20px;
-	    line-height:1.8;
-	    margin-bottom:10px;
-	}
-
-	.score-labels{
-	    display:flex;
-	    justify-content:space-between;
-	    margin-bottom:30px;
-	    color:#888;
-	    font-size:13px;
-	}
-
-        .score-buttons{
-            display:flex;
-            justify-content:space-between;
-            margin-top:30px;
-	    margin-bottom:30px;
-        }
-
-        .score-buttons button{
-	    width:60px;
-	    height:60px;
-	    border-radius:50%;
-	    border:none;
-	    cursor:pointer;
-	    background:#efefef;
-	    font-size:18px;
-	    font-weight:bold;
-	}
-
-	.score-buttons button.selected{
-	    background:#43a047;
-	    color:white;
-	}
-
-	.result-button {
-            margin-top: 25px;
-        }
-
-        .result-button button {
-            width: 100%;
-            padding: 15px;
-            font-size: 18px;
-            border: none;
-            border-radius: 10px;
-            background-color: #222222;
-            color: white;
-            cursor: pointer;
-        }
-
-        .result-button button:hover {
-            background-color: #43a047;
-        }
-
-	.result-button button:disabled{
-	    background:#999;
-	    cursor:not-allowed;
-	}
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="page-question">
 
     <div id="questionArea"></div>
 
