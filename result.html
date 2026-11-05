@@ -300,9 +300,6 @@
                         "top5Result"
                     ).innerHTML = top5Html;
 
-                    // TOP5収めverのみ必要
-                    requestAnimationFrame(fitTop5Only);
-
                     let top5Text = "";
 
                     top5.forEach((item, index) => {
@@ -410,58 +407,6 @@
             frame.style.height =
                 `${content.offsetHeight * scale}px`;
         }
-        
-        function fitTop5Only() {
-            const frame = document.querySelector(".top5-fit-frame");
-            const top5 = document.getElementById("top5Result");
-
-            if (!frame || !top5 || top5.children.length === 0) {
-                return;
-            }
-
-            // まず元サイズに戻す
-            top5.style.transform = "scale(1)";
-            frame.style.height = "auto";
-
-            // TOP5の元の高さ
-            const top5Height = top5.scrollHeight;
-
-            // ブラウザの表示高さ
-            const screenHeight = window.innerHeight;
-
-            // TOP5を1画面内に入れるための倍率
-            // 上下に少し余白を残す
-            const availableHeight = screenHeight - 80;
-
-            const top5Scale = Math.min(
-                1,
-                availableHeight / top5Height
-            );
-
-            top5.style.transformOrigin = "top center";
-            top5.style.transform = `scale(${top5Scale})`;
-
-            // scaleしてもHTML上の元の高さは残ってしまうので、
-            // 見た目の高さに合わせる
-            frame.style.height =
-                `${top5Height * top5Scale}px`;
-        }
-
-        
-        window.addEventListener("load", () => {
-            fitResultLikeIndex();
-            fitTop5Only();
-        });
-
-        window.addEventListener("resize", () => {
-            fitResultLikeIndex();
-            fitTop5Only();
-        });
-
-        setTimeout(() => {
-            fitResultLikeIndex();
-            fitTop5Only();
-        }, 300);
 
         // 1ページ収めver 
         //function fitResultLikeIndex() {
@@ -477,9 +422,10 @@
         //    content.style.transform = `scale(${scale})`;
         //    frame.style.height = `${content.offsetHeight * scale}px`;
         //}
-        //window.addEventListener("load", fitResultLikeIndex);
-        //window.addEventListener("resize", fitResultLikeIndex);
-        //setTimeout(fitResultLikeIndex, 300);
+        
+        window.addEventListener("load", fitResultLikeIndex);
+        window.addEventListener("resize", fitResultLikeIndex);
+        setTimeout(fitResultLikeIndex, 300);
         
     </script>
 </body>
