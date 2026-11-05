@@ -16,19 +16,40 @@
         <h2>カテゴリ別結果</h2>
         <div id="categoryResult"></div>
 
-        <!-- TOP5収めver -->
+        <!-- 画像ver -->
+        <div id="top5Capture">
+            <h2>あなたの強み TOP5</h2>
+            <div class="top5-fit-frame">
+                <div id="top5Result"></div>
+            </div>
+        </div>
+
+        <!-- 普通ver 
         <h2>あなたの強み TOP5</h2>
         <div class="top5-fit-frame">
             <div id="top5Result"></div>
-        </div>
+        </div>-->
 
         <!-- 1ページ収めver 
         <h2>あなたの強み TOP5</h2>
         <div class="top5-fit-frame"></div>-->
 
+        <!-- 画像verのみ -->
+        <div class="save-button">
+            <button
+                id="saveBtn"
+                class="main-button"
+                type="button"
+                onclick="saveTop5Image()"
+            >
+                TOP5を画像として保存
+            </button>
+        </div>
+
         <div class="copy-button">
             <button
-                id="copyBtn" class="main-button"
+                id="copyBtn" 
+                class="main-button"
                 type="button"
                 onclick="copyForAI()"
             >
@@ -40,6 +61,8 @@
     
     </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
     <script>
         let aiPromptText = "";
@@ -358,6 +381,32 @@
                 });
         }
 
+        function saveTop5Image() {
+            const target =
+                document.getElementById("top5Capture");
+
+            if (!target) {
+                return;
+            }
+
+            html2canvas(target, {
+                scale: 2,
+                backgroundColor: "#ffffff",
+                useCORS: true
+            }).then(canvas => {
+                const link =
+                    document.createElement("a");
+
+                link.download =
+                    "強み診断_TOP5.png";
+
+                link.href =
+                    canvas.toDataURL("image/png");
+
+                link.click();
+            });
+        }
+
         function copyForAI() {
             if (aiPromptText === "") {
                 alert(
@@ -383,7 +432,7 @@
                 });
         }
 
-        // TOP5収めver
+        // 普通ver
         function fitResultLikeIndex() {
             const frame = document.querySelector(".result-scale-frame");
             const content = document.querySelector(".result-scale-content");
