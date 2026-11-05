@@ -300,6 +300,9 @@
                         "top5Result"
                     ).innerHTML = top5Html;
 
+                    // TOP5収めverのみ必要
+                    requestAnimationFrame(fitTop5Only);
+
                     let top5Text = "";
 
                     top5.forEach((item, index) => {
@@ -408,6 +411,48 @@
                 `${content.offsetHeight * scale}px`;
         }
         
+        function fitTop5Only() {
+            const frame = document.querySelector(".top5-fit-frame");
+            const top5 = document.getElementById("top5Result");
+
+            if (!frame || !top5 || top5.children.length === 0) return;
+
+            // 一度元サイズに戻してから高さを測る
+            top5.style.transform = "scale(1)";
+
+            const availableHeight =
+                window.innerHeight - 100;
+
+            const scale = Math.min(
+                1,
+                availableHeight / top5.offsetHeight
+            );
+
+            top5.style.transform =
+                `scale(${scale})`;
+
+            top5.style.transformOrigin =
+                "top center";
+
+            // transformで縮めても元の高さが残るので補正
+            frame.style.height =
+                `${top5.offsetHeight * scale}px`;
+        }
+        window.addEventListener("load", () => {
+            fitResultLikeIndex();
+            fitTop5Only();
+        });
+
+        window.addEventListener("resize", () => {
+            fitResultLikeIndex();
+            fitTop5Only();
+        });
+
+        setTimeout(() => {
+            fitResultLikeIndex();
+            fitTop5Only();
+        }, 300);
+
         // 1ページ収めver 
         //function fitResultLikeIndex() {
         //    const frame = document.querySelector(".result-scale-frame");
@@ -422,9 +467,10 @@
         //    content.style.transform = `scale(${scale})`;
         //    frame.style.height = `${content.offsetHeight * scale}px`;
         //}
-        window.addEventListener("load", fitResultLikeIndex);
-        window.addEventListener("resize", fitResultLikeIndex);
-        setTimeout(fitResultLikeIndex, 300);
+        //window.addEventListener("load", fitResultLikeIndex);
+        //window.addEventListener("resize", fitResultLikeIndex);
+        //setTimeout(fitResultLikeIndex, 300);
+        
     </script>
 </body>
 </html>
