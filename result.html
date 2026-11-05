@@ -383,7 +383,7 @@
                 });
         }
 
-        <!-- TOP5収めver -->
+        // TOP5収めver
         function fitResultLikeIndex() {
             const frame = document.querySelector(".result-scale-frame");
             const content = document.querySelector(".result-scale-content");
@@ -408,20 +408,20 @@
                 `${content.offsetHeight * scale}px`;
         }
         
-        <!-- 1ページ収めver 
-        function fitResultLikeIndex() {
-            const frame = document.querySelector(".result-scale-frame");
-            const content = document.querySelector(".result-scale-content");
-            if (!frame || !content) return;
-            const bs = getComputedStyle(document.body);
-            const availableWidth = window.innerWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
-            const availableHeight = window.innerHeight - parseFloat(bs.paddingTop) - parseFloat(bs.paddingBottom);
-            const scaleX = availableWidth / 800;
-            const scaleY = availableHeight / content.offsetHeight;
-            const scale = Math.min(1, scaleX, scaleY);
-            content.style.transform = `scale(${scale})`;
-            frame.style.height = `${content.offsetHeight * scale}px`;
-        }-->
+        // 1ページ収めver 
+        //function fitResultLikeIndex() {
+        //    const frame = document.querySelector(".result-scale-frame");
+        //    const content = document.querySelector(".result-scale-content");
+        //    if (!frame || !content) return;
+        //    const bs = getComputedStyle(document.body);
+        //    const availableWidth = window.innerWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
+        //    const availableHeight = window.innerHeight - parseFloat(bs.paddingTop) - parseFloat(bs.paddingBottom);
+        //    const scaleX = availableWidth / 800;
+        //    const scaleY = availableHeight / content.offsetHeight;
+        //    const scale = Math.min(1, scaleX, scaleY);
+        //    content.style.transform = `scale(${scale})`;
+        //    frame.style.height = `${content.offsetHeight * scale}px`;
+        //}
         window.addEventListener("load", fitResultLikeIndex);
         window.addEventListener("resize", fitResultLikeIndex);
         setTimeout(fitResultLikeIndex, 300);
