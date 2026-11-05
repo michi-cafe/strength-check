@@ -37,6 +37,11 @@ button {
     background-color: #43a047;
 }
 
+.main-button:disabled {
+    background-color: #999999;
+    cursor: not-allowed;
+}
+
 /* ===== index.html ===== */
 .page-index {
     overflow-x: hidden;
