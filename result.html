@@ -16,13 +16,13 @@
         <h2>カテゴリ別結果</h2>
         <div id="categoryResult"></div>
 
-        <!-- 画像ver -->
+        <!-- 画像ver 
         <div id="top5Capture">
             <h2>あなたの強み TOP5</h2>
             <div class="top5-fit-frame">
                 <div id="top5Result"></div>
             </div>
-        </div>
+        </div>-->
 
         <!-- 普通ver 
         <h2>あなたの強み TOP5</h2>
@@ -30,11 +30,11 @@
             <div id="top5Result"></div>
         </div>-->
 
-        <!-- 1ページ収めver 
+        <!-- 1ページ収めver -->
         <h2>あなたの強み TOP5</h2>
-        <div class="top5-fit-frame"></div>-->
+        <div class="top5-fit-frame"></div>
 
-        <!-- 画像verのみ -->
+        <!-- 画像verのみ 
         <div class="save-button">
             <button
                 id="saveBtn"
@@ -44,7 +44,7 @@
             >
                 TOP5を画像として保存
             </button>
-        </div>
+        </div>-->
 
         <div class="copy-button">
             <button
@@ -503,44 +503,38 @@
         }
 
         // 普通ver
-        function fitResultLikeIndex() {
-            const frame = document.querySelector(".result-scale-frame");
-            const content = document.querySelector(".result-scale-content");
-            
-            if (!frame || !content) return;
-            
-            const bs = getComputedStyle(document.body);
-            
-            const availableWidth =
-                window.innerWidth
-                - parseFloat(bs.paddingLeft)
-                - parseFloat(bs.paddingRight);
-
-            const scale = Math.min(
-                1,
-                availableWidth / 800
-            );
-
-            content.style.transform = `scale(${scale})`;
-
-            frame.style.height =
-                `${content.offsetHeight * scale}px`;
-        }
-
-        // 1ページ収めver 
         //function fitResultLikeIndex() {
         //    const frame = document.querySelector(".result-scale-frame");
         //    const content = document.querySelector(".result-scale-content");
         //    if (!frame || !content) return;
         //    const bs = getComputedStyle(document.body);
-        //    const availableWidth = window.innerWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
-        //    const availableHeight = window.innerHeight - parseFloat(bs.paddingTop) - parseFloat(bs.paddingBottom);
-        //    const scaleX = availableWidth / 800;
-        //    const scaleY = availableHeight / content.offsetHeight;
-        //    const scale = Math.min(1, scaleX, scaleY);
+        //    const availableWidth =
+        //        window.innerWidth
+        //        - parseFloat(bs.paddingLeft)
+        //        - parseFloat(bs.paddingRight);
+        //    const scale = Math.min(
+        //        1,
+        //        availableWidth / 800
+        //    );
         //    content.style.transform = `scale(${scale})`;
-        //    frame.style.height = `${content.offsetHeight * scale}px`;
+        //    frame.style.height =
+        //        `${content.offsetHeight * scale}px`;
         //}
+
+        // 1ページ収めver 
+        function fitResultLikeIndex() {
+            const frame = document.querySelector(".result-scale-frame");
+            const content = document.querySelector(".result-scale-content");
+            if (!frame || !content) return;
+            const bs = getComputedStyle(document.body);
+            const availableWidth = window.innerWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
+            const availableHeight = window.innerHeight - parseFloat(bs.paddingTop) - parseFloat(bs.paddingBottom);
+            const scaleX = availableWidth / 800;
+            const scaleY = availableHeight / content.offsetHeight;
+            const scale = Math.min(1, scaleX, scaleY);
+            content.style.transform = `scale(${scale})`;
+            frame.style.height = `${content.offsetHeight * scale}px`;
+        }
         
         window.addEventListener("load", fitResultLikeIndex);
         window.addEventListener("resize", fitResultLikeIndex);
