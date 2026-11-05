@@ -22,9 +22,7 @@ button {
     font-family: inherit;
 }
 
-.start-button button,
-.result-button button,
-#copyBtn {
+.main-button {
     width: 100%;
     padding: 15px;
     font-size: 18px;
@@ -35,9 +33,7 @@ button {
     cursor: pointer;
 }
 
-.start-button button:hover,
-.result-button button:hover,
-#copyBtn:hover {
+.main-button:hover {
     background-color: #43a047;
 }
 
@@ -182,7 +178,7 @@ button {
     margin-top: 25px;
 }
 
-.page-question .result-button button:disabled {
+.page-question .main-button:disabled {
     background: #999;
     cursor: not-allowed;
 }
