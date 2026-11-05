@@ -8,6 +8,8 @@
 </head>
 
 <body class="page-result">
+    <div class="result-scale-frame">
+    <div class="result-scale-content">
     <div class="result-card">
         <h1>診断結果</h1>
 
@@ -26,6 +28,10 @@
                 AI診断用テキストをコピー
             </button>
         </div>
+    </div>
+
+    
+    </div>
     </div>
 
     <script>
@@ -369,6 +375,22 @@
                     );
                 });
         }
+        function fitResultLikeIndex() {
+            const frame = document.querySelector(".result-scale-frame");
+            const content = document.querySelector(".result-scale-content");
+            if (!frame || !content) return;
+            const bs = getComputedStyle(document.body);
+            const availableWidth = window.innerWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
+            const availableHeight = window.innerHeight - parseFloat(bs.paddingTop) - parseFloat(bs.paddingBottom);
+            const scaleX = availableWidth / 800;
+            const scaleY = availableHeight / content.offsetHeight;
+            const scale = Math.min(1, scaleX, scaleY);
+            content.style.transform = `scale(${scale})`;
+            frame.style.height = `${content.offsetHeight * scale}px`;
+        }
+        window.addEventListener("load", fitResultLikeIndex);
+        window.addEventListener("resize", fitResultLikeIndex);
+        setTimeout(fitResultLikeIndex, 300);
     </script>
 </body>
 </html>

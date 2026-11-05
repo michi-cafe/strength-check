@@ -9,6 +9,8 @@
 </head>
 
 <body class="page-question">
+    <div class="question-scale-frame">
+    <div class="question-scale-content">
 
     <div id="questionArea"></div>
 
@@ -22,6 +24,10 @@
         </button>
     </div>
 
+
+    
+    </div>
+    </div>
 
     <script>
 
@@ -150,6 +156,18 @@
 
             });
 
+        function fitQuestionPage() {
+            const frame = document.querySelector(".question-scale-frame");
+            const content = document.querySelector(".question-scale-content");
+            if (!frame || !content) return;
+            const bs = getComputedStyle(document.body);
+            const availableWidth = window.innerWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
+            const scale = Math.min(1, availableWidth / 800);
+            content.style.transform = `scale(${scale})`;
+            frame.style.height = `${content.offsetHeight * scale}px`;
+        }
+        window.addEventListener("load", fitQuestionPage);
+        window.addEventListener("resize", fitQuestionPage);
     </script>
 </body>
 
