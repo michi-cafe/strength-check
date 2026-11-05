@@ -390,8 +390,13 @@
             const availableWidth = window.innerWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
             const availableHeight = window.innerHeight - parseFloat(bs.paddingTop) - parseFloat(bs.paddingBottom);
             const scaleX = availableWidth / 800;
+            <!-- 1ページ収めver 
             const scaleY = availableHeight / content.offsetHeight;
-            const scale = Math.min(1, scaleX, scaleY);
+            const scale = Math.min(1, scaleX, scaleY);-->
+
+            <!-- TOP5収めver -->
+            const scale = Math.min(1, scaleX);
+            
             content.style.transform = `scale(${scale})`;
             frame.style.height = `${content.offsetHeight * scale}px`;
         }
