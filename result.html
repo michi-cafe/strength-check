@@ -415,29 +415,39 @@
             const frame = document.querySelector(".top5-fit-frame");
             const top5 = document.getElementById("top5Result");
 
-            if (!frame || !top5 || top5.children.length === 0) return;
+            if (!frame || !top5 || top5.children.length === 0) {
+                return;
+            }
 
-            // 一度元サイズに戻してから高さを測る
+            // まず元サイズに戻す
             top5.style.transform = "scale(1)";
+            frame.style.height = "auto";
 
-            const availableHeight =
-                window.innerHeight - 100;
+            // TOP5の元の高さ
+            const top5Height = top5.scrollHeight;
 
-            const scale = Math.min(
+            // ブラウザの表示高さ
+            const screenHeight = window.innerHeight;
+
+            // TOP5を1画面内に入れるための倍率
+            // 上下に少し余白を残す
+            const availableHeight = screenHeight - 80;
+
+            const top5Scale = Math.min(
                 1,
-                availableHeight / top5.offsetHeight
+                availableHeight / top5Height
             );
 
-            top5.style.transform =
-                `scale(${scale})`;
+            top5.style.transformOrigin = "top center";
+            top5.style.transform = `scale(${top5Scale})`;
 
-            top5.style.transformOrigin =
-                "top center";
-
-            // transformで縮めても元の高さが残るので補正
+            // scaleしてもHTML上の元の高さは残ってしまうので、
+            // 見た目の高さに合わせる
             frame.style.height =
-                `${top5.offsetHeight * scale}px`;
+                `${top5Height * top5Scale}px`;
         }
+
+        
         window.addEventListener("load", () => {
             fitResultLikeIndex();
             fitTop5Only();
