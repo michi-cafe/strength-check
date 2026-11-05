@@ -1,10 +1,174 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>強み診断</title><link rel="stylesheet" href="style.css"></head>
-<body class="page-question"><div class="scale-frame"><main class="fixed-canvas"><div id="questionArea"></div><div class="action-wrap"><button class="main-button" id="resultBtn" onclick="location.href='result.html'" disabled></button></div></main></div>
-<script>
-const answers={};let totalQuestions=0;
-function fit(){const c=document.querySelector('.fixed-canvas'),f=document.querySelector('.scale-frame'),bs=getComputedStyle(document.body),w=innerWidth-parseFloat(bs.paddingLeft)-parseFloat(bs.paddingRight),s=Math.min(1,w/800);c.style.transform=`scale(${s})`;f.style.height=`${c.scrollHeight*s}px`}
-function selectScore(b){const c=b.closest('.question-card');c.querySelectorAll('.score-buttons button').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');answers[c.dataset.strength]={strength:c.dataset.strength,category:c.dataset.category,score:Number(b.textContent.trim())};sessionStorage.setItem('strengthAnswers',JSON.stringify(answers));updateProgress();const n=c.nextElementSibling;if(n?.classList.contains('question-card'))n.scrollIntoView({behavior:'smooth',block:'start'})}
-function updateProgress(){const n=Object.keys(answers).length,b=document.getElementById('resultBtn');b.textContent=n<totalQuestions?`${n} / ${totalQuestions}`:'診断結果を見る';b.disabled=n<totalQuestions}
-fetch('data/strength.csv').then(r=>r.text()).then(data=>{const rows=data.replace(/^\uFEFF/,'').trim().split(/\r?\n/).slice(1);totalQuestions=rows.length;document.getElementById('questionArea').innerHTML=rows.map((line,i)=>{const [strength,category,text]=line.split(',');return `<div class="question-card" data-strength="${strength}" data-category="${category}"><div class="question-number">Q${i+1} / ${rows.length}</div><p class="question-text">${text}</p><div class="score-buttons">${[1,2,3,4,5,6,7].map(n=>`<button onclick="selectScore(this)">${n}</button>`).join('')}</div><div class="score-labels"><span>← 全く当てはまらない</span><span>非常によく当てはまる →</span></div></div>`}).join('');updateProgress();fit()});
-addEventListener('load',fit);addEventListener('resize',fit);
-</script></body></html>
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>強み診断</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="page-question">
+    <div class="question-scale-frame">
+    <div class="question-scale-content">
+
+    <div id="questionArea"></div>
+
+    
+    <div class="result-button">
+        <button
+            id="resultBtn"
+            onclick="location.href='result.html'"
+            disabled
+        >
+        </button>
+    </div>
+
+
+    
+    </div>
+    </div>
+
+    <script>
+
+        const answers = {};
+        let totalQuestions = 0;
+
+        function selectScore(button) {
+
+            const questionCard = button.closest(".question-card");
+            const buttons = questionCard.querySelectorAll(".score-buttons button");
+
+            buttons.forEach(btn => {
+                btn.classList.remove("selected");
+            });
+
+            button.classList.add("selected");
+
+            const strength = questionCard.dataset.strength;
+            const category = questionCard.dataset.category;
+            const score = Number(button.textContent.trim());
+
+            answers[strength] = {
+                strength: strength,
+                category: category,
+                score: score
+            };
+
+	    sessionStorage.setItem("strengthAnswers", JSON.stringify(answers));
+	    updateProgress(totalQuestions);
+	    
+	    const nextCard = questionCard.nextElementSibling;
+	    
+	    if (nextCard && nextCard.classList.contains("question-card")) {
+	        nextCard.scrollIntoView({
+	            behavior: "smooth",
+	            block: "start"
+	        });
+	    }
+        }
+
+        function updateProgress(totalQuestions) {
+
+            const answeredCount = Object.keys(answers).length;
+            const resultBtn = document.getElementById("resultBtn");
+
+            if (answeredCount < totalQuestions) {
+
+                resultBtn.textContent =`${answeredCount} / ${totalQuestions}`;
+                resultBtn.disabled = true;
+
+            } else {
+
+                resultBtn.textContent = "診断結果を見る";
+                resultBtn.disabled = false;
+
+            }
+        }
+
+        fetch("data/strength.csv")
+            .then(response => response.text())
+            .then(data => {
+
+                const lines = data.trim().split(/\r?\n/);
+                const csvQuestionInfo = [];
+
+                lines.slice(1).forEach(line => {
+
+                    const [
+                        strength,
+                        category,
+                        text,
+                        description
+                    ] = line.split(",");
+
+                    csvQuestionInfo.push({
+                        strength: strength,
+                        category: category,
+                        text: text
+                    });
+
+                });
+
+	        totalQuestions = csvQuestionInfo.length;
+
+                let html = "";
+
+                csvQuestionInfo.forEach((q, index) => {
+
+                    html += `
+                        <div
+                            class="question-card"
+                            data-strength="${q.strength}"
+                            data-category="${q.category}"
+                        >
+
+                            <div class="question-number">
+                                Q${index + 1} / ${csvQuestionInfo.length}
+                            </div>
+
+                            <p class="question-text">
+                                ${q.text}
+                            </p>
+
+                            <div class="score-buttons">
+                                <button onclick="selectScore(this)">1</button>
+                                <button onclick="selectScore(this)">2</button>
+                                <button onclick="selectScore(this)">3</button>
+                                <button onclick="selectScore(this)">4</button>
+                                <button onclick="selectScore(this)">5</button>
+                                <button onclick="selectScore(this)">6</button>
+                                <button onclick="selectScore(this)">7</button>
+                            </div>
+
+                            <div class="score-labels">
+                                <span>← 全く当てはまらない</span>
+                                <span>非常によく当てはまる →</span>
+                            </div>
+
+                        </div>
+                    `;
+
+                });
+
+                document.getElementById("questionArea").innerHTML = html;
+                updateProgress(totalQuestions);
+
+            });
+
+        function fitQuestionPage() {
+            const frame = document.querySelector(".question-scale-frame");
+            const content = document.querySelector(".question-scale-content");
+            if (!frame || !content) return;
+            const bs = getComputedStyle(document.body);
+            const availableWidth = window.innerWidth - parseFloat(bs.paddingLeft) - parseFloat(bs.paddingRight);
+            const scale = Math.min(1, availableWidth / 800);
+            content.style.transform = `scale(${scale})`;
+            frame.style.height = `${content.offsetHeight * scale}px`;
+        }
+        window.addEventListener("load", fitQuestionPage);
+        window.addEventListener("resize", fitQuestionPage);
+    </script>
+</body>
+
+</html>
