@@ -274,3 +274,14 @@ button {
 .page-result .copy-button {
     margin-top: 20px;
 }
+
+/* TOP5だけ縮小対象にする */
+.page-result .top5-fit-frame {
+    width: 100%;
+    overflow: visible;
+}
+
+.page-result #top5Result {
+    width: 100%;
+    transform-origin: top center;
+}
